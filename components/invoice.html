@@ -1,0 +1,100 @@
+<!-- src/components/invoice.html -->
+<div id="invoice-modal" class="modal-overlay">
+    <div class="modal-content invoice-content" style="width: 950px; max-width: 95vw; max-height: 95vh; display: flex; flex-direction: column; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);">
+        
+        <!-- Nút Tắt -->
+        <div style="text-align: right; padding: 12px 16px 0;">
+            <button id="btn-close-invoice" style="background: transparent; border: none; font-size: 26px; cursor: pointer; color: #64748b; line-height: 1; transition: 0.2s;" onmouseover="this.style.color='#e11d48'" onmouseout="this.style.color='#64748b'">&times;</button>
+        </div>
+        
+        <!-- Vùng In (A5) -->
+        <div id="print-area" style="padding: 10px 40px 30px; color: #00529c; font-family: 'Segoe UI', Arial, sans-serif; overflow-y: auto;">
+            
+            <!-- Phần Đầu: Logo & Cửa hàng -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px;">
+                
+                <!-- Cột trái: Chứa Logo (Rộng 180px) -->
+                <div style="width: 180px; display: flex; justify-content: center; align-items: center;">
+                    <img id="inv-logo" src="./assets/logo.png" alt="Logo" style="width: 120px; height: 120px; object-fit: contain;">
+                </div>
+                
+                <!-- Cột giữa: Thông tin cửa hàng -->
+                <div style="flex: 1; text-align: center; line-height: 1.5;">
+                    <h2 id="inv-store-name" style="margin: 0 0 6px 0; font-size: 24px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;"></h2>
+                    <p style="margin: 3px 0; font-size: 13px;"><strong>Địa chỉ:</strong> <span id="inv-store-address"></span></p>
+                    <p style="margin: 3px 0; font-size: 13px;"><strong>Kinh doanh:</strong> <span id="inv-store-sales"></span></p>
+                    <p style="margin: 3px 0; font-size: 13px;"><strong>Bảo hành:</strong> <span id="inv-store-warranty"></span> - <strong>Fanpage:</strong> <span id="inv-store-fanpage"></span></p>
+                    <p style="margin: 3px 0; font-size: 13px;"><strong>Facebook:</strong> <span id="inv-store-fb"></span> - <strong>Web:</strong> <span id="inv-store-web"></span></p>
+                </div>
+                
+                <!-- Cột phải: Khối đệm (Rộng đúng 180px để ép cột giữa vào chính tâm) -->
+                <div style="width: 180px;"></div>
+                
+            </div>
+
+            <!-- Tiêu đề Hóa Đơn -->
+            <div style="text-align: center; margin-bottom: 25px;">
+                <h3 style="margin: 0 0 8px 0; font-size: 20px; font-weight: 700; text-transform: uppercase;">PHIẾU XUẤT KHO KIÊM BẢO HÀNH</h3>
+                <div style="font-size: 14px; font-style: italic;">
+                    Ngày <span id="inv-date-d" style="display:inline-block; width: 35px; text-align:center; border-bottom: 1px dotted #00529c"></span> 
+                    tháng <span id="inv-date-m" style="display:inline-block; width: 35px; text-align:center; border-bottom: 1px dotted #00529c"></span> 
+                    năm 20<span id="inv-date-y" style="display:inline-block; width: 35px; text-align:center; border-bottom: 1px dotted #00529c"></span>
+                    &nbsp;&nbsp;&nbsp;&nbsp; Số: <span id="inv-no" style="color: #dc2626; font-weight: bold; font-style: normal; font-size: 15px; font-style: italic;"></span>
+                </div>
+            </div>
+
+            <!-- Thông tin khách hàng -->
+            <div style="font-size: 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; align-items: flex-end;">
+                    <span style="white-space: nowrap; margin-right: 10px;">Tên khách hàng:</span>
+                    <span id="inv-cus-name" style="flex: 1; border-bottom: 1px dotted #00529c; padding-bottom: 2px; padding-left: 10px; font-family: 'Segoe UI', cursive; color: #0f172a; font-weight: 500;"></span>
+                    <span style="white-space: nowrap; margin-left: 20px; margin-right: 10px;">Điện thoại:</span>
+                    <span id="inv-cus-phone" style="width: 180px; border-bottom: 1px dotted #00529c; padding-bottom: 2px; padding-left: 10px; font-family: 'Segoe UI', cursive; color: #0f172a; font-weight: 500;"></span>
+                </div>
+                <div style="display: flex; align-items: flex-end;">
+                    <span style="white-space: nowrap; margin-right: 10px;">Địa chỉ:</span>
+                    <span id="inv-cus-address" style="flex: 1; border-bottom: 1px dotted #00529c; padding-bottom: 2px; padding-left: 10px; font-family: 'Segoe UI', cursive; color: #0f172a; font-weight: 500;"></span>
+                </div>
+            </div>
+
+            <!-- Bảng Dữ Liệu -->
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px; border: 1px solid #00529c; margin-bottom: 20px;">
+                <thead>
+                    <tr style="background-color: rgba(0, 82, 156, 0.05);">
+                        <th style="border: 1px solid #00529c; padding: 10px 8px; width: 5%; text-align: center; font-weight: bold;">TT</th>
+                        <th style="border: 1px solid #00529c; padding: 10px 8px; text-align: center; font-weight: bold;">Tên thiết bị - Diễn giải</th>
+                        <th style="border: 1px solid #00529c; padding: 10px 8px; width: 8%; text-align: center; font-weight: bold;">SL</th>
+                        <th style="border: 1px solid #00529c; padding: 10px 8px; width: 15%; text-align: center; font-weight: bold;">Đơn giá</th>
+                        <th style="border: 1px solid #00529c; padding: 10px 8px; width: 17%; text-align: center; font-weight: bold;">Thành tiền</th>
+                        <th style="border: 1px solid #00529c; padding: 10px 8px; width: 8%; text-align: center; font-weight: bold;">BH</th>
+                    </tr>
+                </thead>
+                <tbody id="inv-table-body">
+                    <!-- Dữ liệu bảng sẽ được JS chèn vào đây -->
+                </tbody>
+                <tfoot id="inv-table-foot">
+                    <!-- Dữ liệu tổng tiền sẽ được JS chèn vào đây -->
+                </tfoot>
+            </table>
+
+            <!-- Hình thức bảo hành (Đổ từ DB) -->
+            <div id="inv-terms-box" style="font-size: 13px; line-height: 1.6; margin-bottom: 25px;">
+                <!-- Dữ liệu terms sẽ được JS chèn vào đây -->
+            </div>
+
+            <!-- Chữ ký -->
+            <div style="display: flex; justify-content: space-around; font-size: 15px; font-weight: bold; text-align: center; margin-bottom: 60px;">
+                <div style="width: 33%;">Người lập phiếu</div>
+                <div style="width: 33%;">Thủ kho</div>
+                <div style="width: 33%;">Khách hàng</div>
+            </div>
+        </div>
+
+        <!-- Footer Buttons -->
+        <div style="padding: 16px 24px; border-top: 1px solid #e2e8f0; background: #f8fafc; display: flex; justify-content: flex-end; gap: 12px; border-radius: 0 0 12px 12px;">
+            <button class="btn btn-light" id="btn-cancel-invoice" style="padding: 10px 24px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f1f5f9; color: #475569; font-weight: 600; cursor: pointer;">Đóng</button>
+            <button class="btn btn-purple" id="btn-print-invoice" style="padding: 10px 24px; border-radius: 8px; border: none; background: #6366f1; color: white; font-weight: 600; cursor: pointer;"><i class="fa-solid fa-print" style="margin-right: 6px;"></i> In Hóa Đơn (A5)</button>
+            <button class="btn btn-green" id="btn-save-invoice" style="padding: 10px 24px; border-radius: 8px; border: none; background: #10b981; color: white; font-weight: 600; cursor: pointer;"><i class="fa-solid fa-check" style="margin-right: 6px;"></i> Lưu & Hoàn Thành</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,341 @@
+<div class="pos-container">
+  <!-- 1. Thanh Header POS (Tabs Quầy / Lịch sử) -->
+  <div class="pos-header-tabs">
+    <div class="tabs-left">
+      <button
+        class="btn btn-purple active"
+        id="tab-pos-sell"
+        data-target="pos-sell-view"
+      >
+        <i class="fa-solid fa-cash-register"></i> Quầy Bán Hàng (POS) & Tạo Hóa
+        Đơn
+      </button>
+      <button
+        class="btn btn-light"
+        id="tab-pos-history"
+        data-target="pos-history-view"
+      >
+        <i class="fa-solid fa-file-invoice"></i> Danh Sách Hóa Đơn & Lợi Nhuận
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- VIEW 1: QUẦY BÁN HÀNG (POS) - MẶC ĐỊNH HIỆN -->
+  <!-- ========================================== -->
+  <div id="pos-sell-view" class="pos-workspace active-view">
+    <!-- BÊN TRÁI: DANH SÁCH LINH KIỆN -->
+    <div class="pos-left-panel">
+      <div class="panel-header">
+        <h3>Chọn Linh Kiện Lẻ hoặc Bộ PC Để Bán</h3>
+        <div class="price-toggle">
+          <button class="btn btn-purple active" id="price-retail">
+            <i class="fa-solid fa-user"></i> Giá Khách Lẻ
+          </button>
+          <button class="btn btn-light" id="price-dealer">
+            <i class="fa-solid fa-tools"></i> Giá Bán Thợ
+          </button>
+        </div>
+      </div>
+
+      <div class="pos-filters">
+        <div class="search-box">
+          <i class="fa-solid fa-search"></i>
+          <input
+            type="text"
+            id="pos-search"
+            placeholder="Tìm tên linh kiện, mã SP (CPU, RTX 4060, RAM...)"
+          />
+        </div>
+        <select id="pos-category" class="filter-select">
+          <option value="all">Tất cả danh mục</option>
+          <option value="CPU - Vi xử lý">CPU - Vi xử lý</option>
+          <option value="Mainboard">Mainboard</option>
+          <option value="RAM">RAM</option>
+          <option value="VGA - Card đồ họa">VGA - Card đồ họa</option>
+          <option value="SSD">SSD</option>
+          <option value="Nguồn (PSU)">Nguồn (PSU)</option>
+          <option value="Vỏ Case">Vỏ Case</option>
+          <option value="Màn hình">Màn hình</option>
+        </select>
+      </div>
+
+      <div class="pos-product-grid" id="pos-product-list">
+        <!-- Dữ liệu JS sẽ render các thẻ sản phẩm vào đây -->
+        <div class="empty-state">Đang tải danh sách linh kiện...</div>
+      </div>
+    </div>
+
+    <!-- BÊN PHẢI: GIỎ HÀNG & THANH TOÁN -->
+    <div class="pos-right-panel">
+      <div class="panel-header dark-header">
+        <h3>
+          <i class="fa-solid fa-basket-shopping"></i> Giỏ Hàng / Chi Tiết Hóa
+          Đơn Mới
+        </h3>
+        <button class="btn-clear text-gray" id="btn-clear-cart">
+          <i class="fa-solid fa-trash-can"></i> Làm mới
+        </button>
+      </div>
+
+      <div class="pos-customer-box">
+        <!-- DÒNG 1: TÊN & SĐT & LOẠI KHÁCH -->
+        <div class="pos-customer-box">
+          <div class="box-title">
+            <span
+              ><i class="fa-solid fa-user-tag"></i> THÔNG TIN KHÁCH HÀNG (GỢI Ý
+              HOẶC THÊM MỚI)</span
+            >
+          </div>
+
+          <!-- DÒNG 1: TÊN & SĐT & LOẠI KHÁCH -->
+          <div
+            class="customer-inputs"
+            style="margin-bottom: 8px; display: flex; gap: 10px"
+          >
+            <!-- KHUNG CHỨA TÊN KHÁCH HÀNG -->
+            <div style="position: relative; flex: 1">
+              <input
+                type="text"
+                id="pos-cus-name"
+                placeholder="Tên khách hàng..."
+                autocomplete="off"
+                style="width: 100%"
+              />
+            </div>
+
+            <!-- KHUNG CHỨA SỐ ĐIỆN THOẠI -->
+            <div style="position: relative; flex: 1">
+              <input
+                type="text"
+                id="pos-cus-phone"
+                placeholder="Số điện thoại..."
+                autocomplete="off"
+                style="width: 100%"
+              />
+            </div>
+
+            <!-- LOẠI KHÁCH -->
+            <select id="pos-cus-type" style="width: 100px">
+              <option value="Khách lẻ">Khách lẻ</option>
+              <option value="Khách thợ">Khách thợ</option>
+            </select>
+          </div>
+
+          <!-- DÒNG 2: ĐỊA CHỈ -->
+          <div class="customer-inputs">
+            <input
+              type="text"
+              id="pos-cus-address"
+              placeholder="Địa chỉ giao hàng, lắp đặt (Quận/Huyện, Tỉnh/Thành)..."
+              style="width: 100%"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="pos-cart-items" id="pos-cart-body">
+        <div class="empty-cart">
+          <i
+            class="fa-solid fa-cart-arrow-down fa-3x"
+            style="color: #cbd5e1; margin-bottom: 15px"
+          ></i>
+          <p>Chưa có sản phẩm nào trong giỏ hàng</p>
+          <small style="color: #94a3b8"
+            >Nhấp vào linh kiện bên trái để thêm vào đơn</small
+          >
+        </div>
+      </div>
+
+      <div class="pos-summary">
+        <div class="summary-row">
+          <span>Tổng tiền hàng (<span id="cart-count">0</span> SP):</span>
+          <strong id="cart-subtotal">0 ₫</strong>
+        </div>
+        <div class="summary-row">
+          <span>Chiết khấu / Giảm giá (VNĐ):</span>
+          <input
+            type="number"
+            id="cart-discount"
+            value="0"
+            class="input-number-right"
+            style="width: 100px"
+          />
+        </div>
+        <div class="summary-row">
+          <span
+            ><input type="checkbox" id="cart-vat-check" /> Tính thuế VAT
+            (1.5%):</span
+          >
+          <strong id="cart-vat-amount" class="text-blue">0 ₫</strong>
+        </div>
+
+        <div class="payment-method-row">
+          <div class="method-col">
+            <label>PHƯƠNG THỨC TT</label>
+            <select id="cart-payment-method" style="width: 200px">
+              <option value="Chuyển khoản NH (QR)">Chuyển khoản NH (QR)</option>
+              <option value="Tiền mặt">Tiền mặt</option>
+              <option value="Nợ / Trả chậm">Ghi Nợ / Trả chậm</option>
+            </select>
+          </div>
+          <div class="method-col">
+            <label>GHI CHÚ HĐ</label>
+            <input
+              type="text"
+              id="cart-note"
+              placeholder="VD: Giao tận nơi, Ráp sẵn..."
+              style="width: 384px"
+            />
+          </div>
+        </div>
+
+        <div class="profit-box" style="display: none">
+          <div class="profit-row">
+            <span class="text-gray"
+              >Tổng giá vốn: <strong id="cart-total-cost">0 ₫</strong></span
+            >
+            <span class="badge badge-green" id="cart-margin-percent">0%</span>
+          </div>
+          <span class="text-green"
+            >Lợi nhuận ròng đơn này: <strong id="cart-profit">0 ₫</strong></span
+          >
+        </div>
+
+        <div class="summary-total">
+          <span>KHÁCH PHẢI TRẢ:</span>
+          <strong
+            id="cart-final-total"
+            class="text-blue"
+            style="font-size: 24px"
+            >0 ₫</strong
+          >
+        </div>
+
+        <button
+          class="btn btn-purple btn-large"
+          id="btn-checkout"
+          style="
+            width: 100%;
+            margin-top: 15px;
+            font-size: 15px;
+            justify-content: center;
+          "
+        >
+          <i class="fa-solid fa-check-double"></i>
+          <p>Thanh Toán</p>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- VIEW 2: DANH SÁCH HÓA ĐƠN & LỢI NHUẬN (ẨN) -->
+  <!-- ========================================== -->
+  <div
+    id="pos-history-view"
+    class="pos-workspace"
+    style="display: none; flex-direction: column"
+  >
+    <div
+      class="history-toolbar"
+      style="
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 20px;
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+      "
+    >
+      <div
+        class="toolbar-left"
+        style="display: flex; gap: 10px; align-items: center"
+      >
+        <input
+          type="date"
+          id="history-date-from"
+          class="input-search"
+          style="padding: 8px"
+        />
+        <span>đến</span>
+        <input
+          type="date"
+          id="history-date-to"
+          class="input-search"
+          style="padding: 8px"
+        />
+        <button class="btn btn-light" id="btn-filter-history">
+          <i class="fa-solid fa-filter"></i> Lọc
+        </button>
+      </div>
+      <div class="toolbar-right" style="display: flex; gap: 10px">
+        <div class="search-box" style="width: 300px">
+          <i class="fa-solid fa-search"></i>
+          <input
+            type="text"
+            id="history-search"
+            placeholder="Tìm tên KH, SĐT, Tên hàng, Serial..."
+            style="
+              width: 100%;
+              padding: 10px 10px 10px 35px;
+              border: 1px solid #cbd5e1;
+              border-radius: 8px;
+            "
+          />
+        </div>
+        <button class="btn btn-green" id="btn-export-history">
+          <i class="fa-solid fa-file-excel"></i> Xuất Excel
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="table-container"
+      style="
+        flex: 1;
+        overflow: auto;
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        margin-top: 15px;
+      "
+    >
+      <table class="data-table" style="min-width: 1500px">
+        <!-- Cố tình để min-width lớn vì bảng rất nhiều cột -->
+        <thead style="background: #f8fafc">
+          <tr>
+            <th style="white-space: nowrap">
+              Ngày xuất <i class="fa-solid fa-caret-down text-gray"></i>
+            </th>
+            <th style="white-space: nowrap">Khách hàng</th>
+            <th style="white-space: nowrap">SĐT</th>
+            <th style="white-space: nowrap">Địa chỉ</th>
+            <th style="white-space: nowrap">
+              Loại HH <i class="fa-solid fa-caret-down text-gray"></i>
+            </th>
+            <th>Hàng hoá</th>
+            <th style="white-space: nowrap">ĐVT</th>
+            <th style="white-space: nowrap">Đơn giá</th>
+            <th style="white-space: nowrap">Thành tiền</th>
+            <th style="white-space: nowrap">KM/ Nhập lại</th>
+            <th style="white-space: nowrap">Còn lại</th>
+            <th style="white-space: nowrap">Bảo hành</th>
+            <th>Ghi chú</th>
+            <th style="white-space: nowrap">Công nợ</th>
+            <th style="white-space: nowrap">SX</th>
+            <th style="white-space: nowrap">CL</th>
+          </tr>
+        </thead>
+        <tbody id="pos-history-tbody">
+          <!-- Dữ liệu JS -->
+          <tr>
+            <td colspan="16" class="empty-state">
+              Đang tải danh sách hóa đơn...
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

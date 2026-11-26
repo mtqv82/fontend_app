@@ -1,0 +1,294 @@
+<div id="modal-add-customer" class="modal-overlay">
+  <div
+    class="modal-content"
+    style="
+      max-width: 650px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    "
+  >
+    <!-- Header có màu nền nhẹ để tách biệt -->
+    <div
+      class="modal-header"
+      style="
+        background: #f8fafc;
+        padding: 18px 24px;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      "
+    >
+      <h2
+        style="
+          margin: 0;
+          font-size: 18px;
+          color: #1e293b;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        "
+      >
+        <i class="fa-solid fa-user-plus" style="color: #6366f1"></i> Thêm Khách
+        Hàng Mới
+      </h2>
+      <button
+        class="btn-close"
+        id="btn-close-customer-modal"
+        style="
+          background: none;
+          border: none;
+          font-size: 20px;
+          color: #64748b;
+          cursor: pointer;
+          padding: 4px;
+          line-height: 1;
+        "
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="modal-body" style="padding: 24px">
+      <form id="form-add-customer">
+        <!-- Bố cục 2 cột (Dùng CSS Grid) -->
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+          "
+        >
+          <div class="form-group" style="margin-bottom: 0">
+            <label
+              style="
+                display: block;
+                margin-bottom: 6px;
+                font-weight: 500;
+                font-size: 13px;
+                color: #475569;
+              "
+              >Mã Khách Hàng</label
+            >
+            <input
+              type="text"
+              id="add-cus-code"
+              placeholder="Để trống tự sinh mã (VD: KH123)"
+              style="
+                width: 100%;
+                padding: 10px 12px;
+                border: 1px solid #cbd5e1;
+                border-radius: 6px;
+                box-sizing: border-box;
+                background: #f8fafc;
+              "
+            />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0">
+            <label
+              style="
+                display: block;
+                margin-bottom: 6px;
+                font-weight: 500;
+                font-size: 13px;
+                color: #475569;
+              "
+              >Phân Loại <span style="color: #ef4444">*</span></label
+            >
+            <select
+              id="add-cus-type"
+              style="
+                width: 100%;
+                padding: 10px 12px;
+                border: 1px solid #cbd5e1;
+                border-radius: 6px;
+                box-sizing: border-box;
+                background: #fff;
+                cursor: pointer;
+              "
+            >
+              <option value="Khách lẻ">Khách lẻ</option>
+              <option value="Khách thợ">Khách thợ / Đại lý</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0">
+            <label
+              style="
+                display: block;
+                margin-bottom: 6px;
+                font-weight: 500;
+                font-size: 13px;
+                color: #475569;
+              "
+              >Họ và Tên <span style="color: #ef4444">*</span></label
+            >
+            <input
+              type="text"
+              id="add-cus-name"
+              required
+              placeholder="Nhập tên khách hàng..."
+              style="
+                width: 100%;
+                padding: 10px 12px;
+                border: 1px solid #cbd5e1;
+                border-radius: 6px;
+                box-sizing: border-box;
+              "
+            />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0">
+            <label
+              style="
+                display: block;
+                margin-bottom: 6px;
+                font-weight: 500;
+                font-size: 13px;
+                color: #475569;
+              "
+              >Số điện thoại <span style="color: #ef4444">*</span></label
+            >
+            <input
+              type="text"
+              id="add-cus-phone"
+              required
+              placeholder="Nhập số điện thoại..."
+              style="
+                width: 100%;
+                padding: 10px 12px;
+                border: 1px solid #cbd5e1;
+                border-radius: 6px;
+                box-sizing: border-box;
+              "
+            />
+          </div>
+        </div>
+
+        <!-- Bố cục 1 cột kéo dài -->
+        <div class="form-group" style="margin-bottom: 16px">
+          <label
+            style="
+              display: block;
+              margin-bottom: 6px;
+              font-weight: 500;
+              font-size: 13px;
+              color: #475569;
+            "
+            >Địa chỉ liên hệ</label
+          >
+          <input
+            type="text"
+            id="add-cus-address"
+            placeholder="Nhập địa chỉ, quận/huyện, tỉnh/thành..."
+            style="
+              width: 100%;
+              padding: 10px 12px;
+              border: 1px solid #cbd5e1;
+              border-radius: 6px;
+              box-sizing: border-box;
+            "
+          />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 24px">
+          <label
+            style="
+              display: block;
+              margin-bottom: 6px;
+              font-weight: 500;
+              font-size: 13px;
+              color: #475569;
+            "
+            >Ghi chú</label
+          >
+          <textarea
+            id="add-cus-note"
+            rows="3"
+            placeholder="Ghi chú thêm về nhu cầu mua sắm, công nợ..."
+            style="
+              width: 100%;
+              padding: 10px 12px;
+              border: 1px solid #cbd5e1;
+              border-radius: 6px;
+              box-sizing: border-box;
+              resize: vertical;
+              font-family: inherit;
+            "
+          ></textarea>
+        </div>
+
+        <!-- Nút Hành động -->
+        <div
+          class="modal-actions"
+          style="
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+          "
+        >
+          <button
+            type="button"
+            id="btn-cancel-customer"
+            style="
+              padding: 10px 20px;
+              background: #f1f5f9;
+              color: #475569;
+              border: 1px solid #cbd5e1;
+              border-radius: 6px;
+              font-weight: 500;
+              cursor: pointer;
+              transition: all 0.2s;
+            "
+          >
+            Hủy Bỏ
+          </button>
+          <button
+            type="submit"
+            id="btn-save-customer"
+            style="
+              padding: 10px 20px;
+              background: #6366f1;
+              color: white;
+              border: none;
+              border-radius: 6px;
+              font-weight: 500;
+              cursor: pointer;
+              box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+              transition: all 0.2s;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+            "
+          >
+            <i class="fa-solid fa-save"></i> Lưu Khách Hàng
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Hiệu ứng hover cho input và button để form mượt hơn */
+  #form-add-customer input:focus,
+  #form-add-customer select:focus,
+  #form-add-customer textarea:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+
+  #btn-cancel-customer:hover {
+    background: #e2e8f0;
+  }
+
+  #btn-save-customer:hover {
+    background: #4f46e5;
+  }
+</style>

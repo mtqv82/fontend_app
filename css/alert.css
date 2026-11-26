@@ -1,0 +1,112 @@
+/* ============ CUSTOM ALERT TOAST (GÓC TRÊN BÊN PHẢI) ============ */
+.custom-alert-overlay {
+    position: fixed;
+    top: 24px;
+    /* Cố định cách mép trên 24px */
+    right: 24px;
+    /* Cố định cách mép phải 24px */
+    z-index: 9999;
+    /* Bỏ background mờ, bỏ chặn click trang web để người dùng vẫn thao tác được */
+    pointer-events: none;
+}
+
+.custom-alert-box {
+    background: #ffffff;
+    width: 360px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.2);
+    padding: 16px 20px;
+    pointer-events: auto;
+    /* Cho phép click vào nút OK bên trong thông báo */
+
+    /* Hiệu ứng bắt đầu từ ngoài màn hình bên phải (120%) */
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Hiệu ứng nảy nhẹ (bounce) xịn xò */
+
+    /* Bố cục Grid siêu gọn (Không cần sửa file JS) */
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 14px;
+    align-items: start;
+    text-align: left;
+}
+
+/* Khi Javascript ném class "show" vào -> Trượt ra vị trí 0 */
+.custom-alert-overlay.show .custom-alert-box {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* 1. Định vị Icon sang cột 1 */
+.alert-icon {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    font-size: 26px;
+    margin-top: 2px;
+}
+
+.alert-icon.warning {
+    color: #f59e0b;
+}
+
+.alert-icon.success {
+    color: #10b981;
+}
+
+.alert-icon.error {
+    color: #ef4444;
+}
+
+/* 2. Định vị Tiêu đề & Nội dung sang cột 2 */
+.alert-title {
+    grid-column: 2;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.alert-message {
+    grid-column: 2;
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+/* 3. Nút bấm thu nhỏ, ép sát vào mép phải cột 2 */
+.alert-btn {
+    grid-column: 2;
+    justify-self: end;
+    background: #f1f5f9;
+    color: #475569;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    grid-column: 2;
+    justify-self: end;
+}
+
+.alert-btn:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+/* Điểm nhấn: Thêm dải màu ở viền trái theo từng trạng thái (CSS đời mới) */
+.custom-alert-box:has(.success) {
+    border-left: 4px solid #10b981;
+}
+
+.custom-alert-box:has(.warning) {
+    border-left: 4px solid #f59e0b;
+}
+
+.custom-alert-box:has(.error) {
+    border-left: 4px solid #ef4444;
+}

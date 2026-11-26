@@ -1,0 +1,101 @@
+<div class="customer-container">
+  <!-- 1. Ba thẻ thống kê trên cùng -->
+  <div class="customer-stats">
+    <div class="stat-card">
+      <div class="icon-box bg-blue-light">
+        <i class="fa-solid fa-users text-blue"></i>
+      </div>
+      <div class="stat-info">
+        <span>Tổng số Khách hàng</span>
+        <h3 id="total-customers">0 khách hàng</h3>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="icon-box bg-orange-light">
+        <i class="fa-solid fa-tools text-orange"></i>
+      </div>
+      <div class="stat-info">
+        <span>Khách Thợ / Đại lý lấy sỉ</span>
+        <h3 id="total-dealers" class="text-orange">0 khách thợ / đại lý</h3>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="icon-box bg-green-light">
+        <i class="fa-solid fa-user text-green"></i>
+      </div>
+      <div class="stat-info">
+        <span>Khách Lẻ tiêu dùng</span>
+        <h3 id="total-retail" class="text-green">0 khách lẻ</h3>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="toolbar customer-toolbar"
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    "
+  >
+    <div
+      class="category-tabs customer-tabs"
+      style="margin-bottom: 0; display: flex; gap: 8px"
+    >
+      <button class="tab-btn active" data-type="all">Tất cả khách hàng</button>
+      <button class="tab-btn" data-type="Khách lẻ">
+        <i class="fa-solid fa-user"></i> Khách lẻ
+      </button>
+      <button class="tab-btn" data-type="Khách thợ">
+        <i class="fa-solid fa-tools"></i> Khách thợ / Đại lý
+      </button>
+    </div>
+
+    <div class="actions" style="display: flex; gap: 10px; align-items: center">
+      <input
+        type="text"
+        id="search-customer"
+        class="input-search"
+        placeholder="Tìm tên khách, SĐT, địa chỉ, ghi chú..."
+        style="width: 250px"
+      />
+
+      <button class="btn btn-green" id="btn-export-customers">
+        <i class="fa-solid fa-file-excel"></i> Xuất Excel
+      </button>
+
+      <button class="btn btn-purple" id="btn-add-customer">
+        <i class="fa-solid fa-user-plus"></i> Thêm Khách Hàng
+      </button>
+    </div>
+  </div>
+  <div class="table-container">
+    <div class="table-header-dark">
+      <span
+        >Hiển thị <strong id="showing-customers">0 / 0</strong> khách hàng</span
+      >
+      <span class="hint-text"
+        ><i class="fa-solid fa-wand-magic-sparkles"></i> Nhấp đúp chuột
+        (Double-click) vào thông tin bất kỳ để sửa nhanh trực tiếp</span
+      >
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>MÃ KH</th>
+          <th>HỌ VÀ TÊN KHÁCH HÀNG</th>
+          <th>SỐ ĐIỆN THOẠI</th>
+          <th>PHÂN LOẠI</th>
+          <th>ĐỊA CHỈ LIÊN HỆ</th>
+          <th>GHI CHÚ</th>
+          <th>TỔNG MUA</th>
+          <th>LỊCH SỬ ĐƠN</th>
+        </tr>
+      </thead>
+      <tbody id="customer-tbody"></tbody>
+    </table>
+  </div>
+</div>

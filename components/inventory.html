@@ -1,0 +1,88 @@
+<div class="category-tabs"></div>
+<div class="toolbar">
+  <div class="toolbar-left">
+    <input
+      type="text"
+      class="input-search"
+      id="search-inventory"
+      placeholder="Tìm theo tên linh kiện, mã SKU..."
+    />
+    <div style="position: relative; display: inline-block">
+      <input
+        type="text"
+        id="brand-filter"
+        placeholder="Gõ tên hãng để lọc..."
+        autocomplete="off"
+        style="
+          padding: 8px;
+          border: 1px solid #cbd5e1;
+          border-radius: 6px;
+          outline: none;
+          width: 180px;
+        "
+      />
+      <ul
+        id="brand-list-filter"
+        class="custom-suggest-list"
+        style="display: none"
+      ></ul>
+    </div>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn btn-green" id="btn-import-excel">
+      <i class="fa-solid fa-file-excel"></i> Nhập Excel
+    </button>
+    <button class="btn btn-green">
+      <i class="fa-solid fa-file-export"></i> Xuất Excel
+    </button>
+    <button class="btn btn-purple" id="btn-add-product">
+      <i class="fa-solid fa-plus"></i> Thêm Linh Kiện Mới
+    </button>
+  </div>
+</div>
+
+<div class="table-container">
+  <div class="table-header-info">
+    <div class="info-left">
+      <span class="highlight" id="total-items">0</span> mã linh kiện & sản phẩm
+      <span class="divider">|</span>
+      <i class="fa-regular fa-lightbulb text-yellow"></i> Mẹo: Nhấp đúp chuột
+      (Double-click) vào ô để sửa nhanh
+    </div>
+    <div class="info-right">
+      <span class="status-dot dot-new"
+        ><i class="fa-solid fa-circle"></i> Mới 100%</span
+      >
+      <span class="status-dot dot-likenew"
+        ><i class="fa-solid fa-circle"></i> Like New 99%</span
+      >
+      <span class="status-dot dot-old"
+        ><i class="fa-solid fa-circle"></i> Hàng Cũ (2nd)</span
+      >
+    </div>
+  </div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>TÊN LINH KIỆN / SẢN PHẨM</th>
+        <th>S/N (SERIAL)</th>
+        <th>LOẠI</th>
+        <th>NPP / HÃNG</th>
+        <th>TÌNH TRẠNG</th>
+        <th>TỒN</th>
+        <th>GIÁ VỐN</th>
+        <th>GIÁ THỢ</th>
+        <th>GIÁ LẺ</th>
+        <th>BẢO HÀNH</th>
+        <th>GHI CHÚ</th>
+        <th>THAO TÁC</th>
+      </tr>
+    </thead>
+    <tbody id="inventory-tbody">
+      <tr>
+        <td colspan="13" class="empty-state">Đang tải dữ liệu...</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

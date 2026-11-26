@@ -1,0 +1,33 @@
+<header
+  class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between shrink-0 z-10 w-full"
+>
+  <div>
+    <h1 id="headerTitle" class="text-[17px] font-black text-slate-800">
+      Tổng quan hệ thống
+    </h1>
+    <p class="text-[11px] text-slate-500 mt-0.5">
+      Danh mục quản lý nội bộ Máy tính Quốc Vượng
+    </p>
+  </div>
+  <div class="flex items-center gap-3">
+    <div class="relative w-64 hidden md:block">
+      <input
+        type="text"
+        placeholder="Tìm nhanh SP, S/N..."
+        class="w-full bg-slate-100 rounded-full pl-4 pr-4 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+      />
+    </div>
+    <button
+      onclick="openPosModal()"
+      class="px-4 py-1.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold shadow-md transition flex items-center gap-1.5"
+    >
+      <span>🛒</span> Tạo Hóa Đơn (POS)
+    </button>
+    <button
+      onclick="openImportModal()"
+      class="px-4 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-[11px] font-bold shadow-md transition flex items-center gap-1.5"
+    >
+      <span>📥</span> Nhập Kho
+    </button>
+  </div>
+</header>

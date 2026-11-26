@@ -1,0 +1,36 @@
+<!-- File: src/components/excel.html -->
+<div class="modal-overlay" id="modal-import-excel">
+    <div class="modal-box" style="max-width: 520px; background: #ffffff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); overflow: hidden; display: flex; flex-direction: column;">
+        
+        <!-- Header -->
+        <div class="modal-header" style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="font-size: 18px; margin: 0; color: #1e293b;"><i class="fa-solid fa-file-excel" style="color: #10b981; margin-right: 8px;"></i> Nhập dữ liệu Excel</h2>
+            <button class="btn-close" id="btn-close-import" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #64748b;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <!-- Body -->
+        <div class="modal-body" style="padding: 24px 24px; text-align: center;">
+            <p style="margin: 0 0 12px 0; color: #475569; font-size: 14px; line-height: 1.5;">
+                Vui lòng tải lên file Excel (.xlsx) theo đúng thứ tự cột tiêu chuẩn của hệ thống.
+            </p>
+            
+            <!-- NÚT TẢI FILE MẪU -->
+            <button id="btn-download-template" style="background: #f8fafc; color: #5c42e3; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; margin-bottom: 20px; transition: 0.2s;">
+                <i class="fa-solid fa-download" style="margin-right: 5px;"></i> Tải file Excel mẫu
+            </button>
+            
+            <!-- Khu vực tải file -->
+            <div class="upload-zone" id="upload-zone" style="border: 2px dashed #cbd5e1; padding: 40px 20px; border-radius: 8px; cursor: pointer; background: #f8fafc; transition: all 0.2s ease;">
+                <i class="fa-solid fa-cloud-arrow-up" style="font-size: 40px; color: #94a3b8; margin-bottom: 15px;"></i>
+                <p id="upload-text" style="font-weight: 500; color: #334155; margin: 0; font-size: 15px;">Nhấp vào đây để chọn file Excel</p>
+                <input type="file" id="input-excel-file" accept=".xlsx, .xls" style="display: none;">
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="modal-footer" style="padding: 16px 24px; border-top: 1px solid #e2e8f0; background: #f8fafc; display: flex; justify-content: flex-end; gap: 10px;">
+            <button class="btn btn-white" id="btn-cancel-import" style="padding: 8px 16px; border: 1px solid #cbd5e1; background: #fff; border-radius: 6px; cursor: pointer; color: #475569; font-weight: 500;">Hủy bỏ</button>
+            <button class="btn btn-green" id="btn-confirm-import" disabled style="padding: 8px 16px; background: #10b981; border: none; color: #fff; border-radius: 6px; cursor: not-allowed; font-weight: 500; opacity: 0.5;">Xác nhận Nhập</button>
+        </div>
+    </div>
+</div>

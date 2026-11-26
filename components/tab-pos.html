@@ -1,0 +1,62 @@
+<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+  <div class="relative w-[300px]">
+    <span
+      class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"
+      >🔍</span
+    >
+    <input
+      id="searchSale"
+      oninput="renderSales()"
+      type="text"
+      placeholder="Tìm theo Tên khách, SĐT, Sản phẩm..."
+      class="w-full pl-9 pr-4 py-2.5 rounded-lg border border-slate-200 text-[11px] focus:outline-none focus:border-indigo-500 shadow-sm"
+    />
+  </div>
+  <div class="flex items-center gap-2">
+    <button
+      onclick="addBlankSaleRow()"
+      class="px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white text-[11px] font-bold shadow-sm transition"
+    >
+      + Thêm Dòng Trống
+    </button>
+    <button
+      onclick="openPosModal()"
+      class="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold shadow-sm transition"
+    >
+      🛒 LÊN ĐƠN HÀNG (POS)
+    </button>
+  </div>
+</div>
+<div
+  class="bg-white rounded-xl border border-slate-200 shadow-sm table-container overflow-hidden flex flex-col"
+>
+  <div
+    class="bg-[#1e293b] px-4 py-2.5 text-white text-[11px] font-bold flex items-center gap-2 shrink-0"
+  >
+    <span class="text-amber-400">🪄</span> Nhấp đúp chuột để sửa nhanh dữ liệu
+    bán hàng.
+  </div>
+  <div class="overflow-x-auto">
+    <table class="w-full text-left erp-table border-collapse min-w-max">
+      <thead>
+        <tr>
+          <th class="w-20">Ngày xuất</th>
+          <th class="w-32">Khách hàng</th>
+          <th class="w-24">SĐT</th>
+          <th class="w-48">Hàng hoá</th>
+          <th class="w-12 text-center">ĐVT</th>
+          <th class="w-12 text-center">SL</th>
+          <th class="w-24 text-right">Đơn giá</th>
+          <th class="w-24 text-right">Thành tiền</th>
+          <th class="w-24 text-right">KM / Trừ</th>
+          <th class="w-24 text-right">Còn lại</th>
+          <th class="w-24 text-center">Bảo hành</th>
+          <th class="w-16 text-center">Công nợ</th>
+          <th class="w-24 text-right">CL (Lãi)</th>
+          <th class="w-10 text-center">Xóa</th>
+        </tr>
+      </thead>
+      <tbody id="salesTableBody" class="divide-y divide-slate-100"></tbody>
+    </table>
+  </div>
+</div>

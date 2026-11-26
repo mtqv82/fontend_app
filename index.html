@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý Kho Linh kiện - Quốc Vượng</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/alert.css" />
+    <link rel="stylesheet" href="css/customers.css" />
+    <link rel="stylesheet" href="./css/pos.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="app-container">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <div class="logo-box">QV</div>
+          <div class="brand-info">
+            <h2>MÁY TÍNH QUỐC VƯỢNG</h2>
+            <span class="branch"
+              ><i class="fa-solid fa-circle"></i> Chi nhánh Hà Nội</span
+            >
+          </div>
+        </div>
+
+        <nav class="sidebar-menu">
+          <div class="menu-group">
+            <div class="menu-title">ĐIỀU HÀNH & THỐNG KÊ</div>
+            <a href="#" class="menu-item" data-target="page-dashboard">
+              <i class="fa-solid fa-chart-pie"></i> Tổng quan (Dashboard)
+            </a>
+          </div>
+
+          <div class="menu-group">
+            <div class="menu-title">KHO & SẢN PHẨM</div>
+            <a href="#" class="menu-item active" data-target="page-inventory">
+              <i class="fa-solid fa-box-open"></i> Kho Linh kiện & Laptop
+            </a>
+          </div>
+
+          <div class="menu-group">
+            <div class="menu-title">KINH DOANH & HẬU MÃI</div>
+            <a href="#" class="menu-item" data-target="page-pos">
+              <i class="fa-solid fa-cart-shopping"></i> Bán hàng & Hóa đơn
+            </a>
+            <a href="#" class="menu-item" data-target="page-customers">
+              <i class="fa-solid fa-users"></i> Khách hàng
+            </a>
+            <a href="#" class="menu-item" data-target="page-warranties">
+              <i class="fa-solid fa-screwdriver-wrench"></i> Bảo hành
+            </a>
+          </div>
+
+          <div class="menu-group">
+            <div class="menu-title">HỆ THỐNG</div>
+            <a href="#" class="menu-item" data-target="page-settings">
+              <i class="fa-solid fa-gear"></i> Cài đặt & Mẫu in
+            </a>
+          </div>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="user-avatar">AD</div>
+          <div class="user-info">
+            <h4>Admin Quốc Vượng</h4>
+            <p>Toàn quyền hệ thống</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
+        <header class="top-header">
+          <div class="header-left">
+            <h1 id="header-title">Quản lý Kho Linh kiện</h1>
+            <p id="header-desc">Danh mục quản lý nội bộ Máy tính Quốc Vượng</p>
+          </div>
+          <div class="header-right"></div>
+        </header>
+
+        <div class="content-wrapper">
+          <div id="page-dashboard" class="page-section">
+            <p>Chức năng đang phát triển</p>
+          </div>
+
+          <!-- KHUNG RỖNG CHO KHO LINH KIỆN (Đã tách ra components/inventory.html) -->
+          <div id="page-inventory" class="page-section active"></div>
+
+          <!-- CÁC KHUNG RỖNG KHÁC -->
+          <div id="page-pos" class="page-section"></div>
+          <div id="page-customers" class="page-section"></div>
+          <div id="page-warranties" class="page-section"></div>
+          <div id="page-settings" class="page-section"></div>
+        </div>
+      </main>
+    </div>
+
+    <!-- CÁC KHUNG CHỨA MODAL TRÊN TOÀN HỆ THỐNG -->
+    <div id="modal-container"></div>
+    <div id="custom-alert-container"></div>
+    <div id="modal-excel-container"></div>
+    <div id="modal-delete-container"></div>
+    <div id="modal-warranty-container"></div>
+
+    <!-- Script Module -->
+    <script type="module" src="js/main.js"></script>
+    <input
+      type="file"
+      id="input-excel-file"
+      accept=".xlsx, .xls"
+      style="display: none"
+    />
+
+    <!-- Fix lỗi xung đột module của Electron khi dùng thư viện ngoài -->
+    <script>
+      if (typeof module === "object") {
+        window.tempModule = module;
+        module = undefined;
+      }
+    </script>
+
+    <!-- Tải thư viện XLSX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- Trả lại biến 'module' cho Electron -->
+    <script>
+      if (window.tempModule) {
+        module = window.tempModule;
+      }
+    </script>
+  </body>
+</html>

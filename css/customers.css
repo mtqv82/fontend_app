@@ -1,0 +1,133 @@
+/* =========================================
+   GIAO DIỆN QUẢN LÝ KHÁCH HÀNG
+========================================= */
+.customer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Thẻ thống kê */
+.customer-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.stat-card {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.bg-blue-light {
+  background: #eff6ff;
+}
+.text-blue {
+  color: #3b82f6;
+}
+
+.bg-orange-light {
+  background: #fff7ed;
+}
+.text-orange {
+  color: #ea580c;
+}
+
+.bg-green-light {
+  background: #f0fdf4;
+}
+.text-green {
+  color: #16a34a;
+}
+
+.stat-info span {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.stat-info h3 {
+  margin: 4px 0 0 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Thanh công cụ ngang */
+.customer-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Header Bảng đen tuyền & Hint màu vàng */
+.table-header-dark {
+  background: #0f172a;
+  color: #fff;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  font-size: 13px;
+}
+
+.hint-text {
+  color: #fbbf24;
+  font-weight: 500;
+}
+
+/* Phù hiệu Phân loại (Badges) */
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.badge-retail {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+.badge-dealer {
+  background: #fff7ed;
+  color: #ea580c;
+  border: 1px solid #fed7aa;
+}
+
+.btn-history {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-history:hover {
+  background: #e2e8f0;
+}

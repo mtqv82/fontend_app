@@ -1,0 +1,97 @@
+<aside
+  class="w-[260px] bg-[#0f172a] text-slate-300 flex flex-col justify-between shrink-0 z-20 shadow-2xl h-full"
+>
+  <div>
+    <!-- Logo & Tên User -->
+    <div class="px-5 py-5 border-b border-slate-800 flex items-center gap-3">
+      <div
+        class="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-black text-white text-lg shadow-lg"
+      >
+        QV
+      </div>
+      <div class="flex flex-col">
+        <div
+          id="sidebarStoreName"
+          class="font-black text-sm text-white tracking-wide"
+        >
+          QUỐC VƯỢNG PRO
+        </div>
+        <div
+          class="text-[10px] text-emerald-400 mt-1 flex items-center gap-1.5"
+        >
+          <span
+            class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"
+          ></span>
+          Chi nhánh Hà Nội
+        </div>
+      </div>
+    </div>
+    <nav class="mt-4 flex flex-col gap-1 text-[13px]">
+      <!-- Nhóm: ĐIỀU HÀNH & THỐNG KÊ -->
+      <div
+        class="px-6 py-2 text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2"
+      >
+        ĐIỀU HÀNH & THỐNG KÊ
+      </div>
+      <button
+        onclick="switchTab('dashboard')"
+        id="nav-dashboard"
+        class="menu-item menu-active"
+      >
+        <span>📊</span> Tổng quan (Dashboard)
+      </button>
+
+      <!-- Nhóm: KHO & SẢN PHẨM -->
+      <div
+        class="px-6 py-2 text-[10px] font-black text-slate-500 uppercase tracking-widest mt-4"
+      >
+        KHO & SẢN PHẨM
+      </div>
+      <button
+        onclick="switchTab('products')"
+        id="nav-products"
+        class="menu-item"
+      >
+        <span>📦</span> Kho Linh kiện & Laptop
+      </button>
+
+      <!-- Nhóm: KINH DOANH & HẬU MÃI -->
+      <div
+        class="px-6 py-2 text-[10px] font-black text-slate-500 uppercase tracking-widest mt-4"
+      >
+        KINH DOANH & HẬU MÃI
+      </div>
+      <button onclick="switchTab('pos')" id="nav-pos" class="menu-item">
+        <span>🛒</span> Bán hàng & Hóa đơn
+      </button>
+
+      <!-- Nhóm: HỆ THỐNG -->
+      <div
+        class="px-6 py-2 text-[10px] font-black text-slate-500 uppercase tracking-widest mt-4"
+      >
+        HỆ THỐNG
+      </div>
+      <button
+        onclick="switchTab('settings')"
+        id="nav-settings"
+        class="menu-item"
+      >
+        <span>⚙️</span> Cài đặt & Mẫu in
+      </button>
+    </nav>
+  </div>
+  <!-- User Footer -->
+  <div
+    class="p-4 border-t border-slate-800 flex items-center gap-3 bg-[#0b1120]"
+  >
+    <div
+      class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-xs"
+    >
+      AD
+    </div>
+    <div class="text-[11px] leading-tight">
+      <div class="font-bold text-white">Admin Quốc Vượng</div>
+      <div class="text-slate-500">Toàn quyền hệ thống</div>
+    </div>
+  </div>
+</aside>

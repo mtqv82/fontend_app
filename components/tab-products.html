@@ -1,0 +1,150 @@
+<!-- Pills Lọc Nhanh -->
+<div class="flex flex-wrap gap-2 mb-4" id="categoryPills">
+  <button
+    onclick="setFilterCat('')"
+    class="px-4 py-1.5 rounded-full text-[11px] font-bold transition bg-indigo-600 text-white shadow-sm"
+  >
+    Tất cả
+  </button>
+  <button
+    onclick="setFilterCat('CPU')"
+    class="px-4 py-1.5 rounded-full text-[11px] font-bold transition bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+  >
+    CPU
+  </button>
+  <button
+    onclick="setFilterCat('Mainboard')"
+    class="px-4 py-1.5 rounded-full text-[11px] font-bold transition bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+  >
+    Mainboard
+  </button>
+  <button
+    onclick="setFilterCat('RAM')"
+    class="px-4 py-1.5 rounded-full text-[11px] font-bold transition bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+  >
+    RAM
+  </button>
+  <button
+    onclick="setFilterCat('VGA')"
+    class="px-4 py-1.5 rounded-full text-[11px] font-bold transition bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+  >
+    VGA
+  </button>
+  <button
+    onclick="setFilterCat('SSD')"
+    class="px-4 py-1.5 rounded-full text-[11px] font-bold transition bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+  >
+    SSD
+  </button>
+  <button
+    onclick="setFilterCat('HDD')"
+    class="px-4 py-1.5 rounded-full text-[11px] font-bold transition bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+  >
+    HDD
+  </button>
+  <button
+    onclick="setFilterCat('Case')"
+    class="px-4 py-1.5 rounded-full text-[11px] font-bold transition bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+  >
+    Case
+  </button>
+  <button
+    onclick="setFilterCat('Laptop')"
+    class="px-4 py-1.5 rounded-full text-[11px] font-bold transition bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+  >
+    Laptop
+  </button>
+</div>
+
+<!-- Thanh Công Cụ -->
+<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+  <div class="flex items-center gap-3 flex-1">
+    <input
+      id="searchProduct"
+      oninput="renderProducts()"
+      type="text"
+      placeholder="Tìm theo tên linh kiện, mã SKU..."
+      class="w-[300px] px-4 py-2.5 rounded-lg border border-slate-200 text-[11px] focus:outline-none focus:border-indigo-500 shadow-sm"
+    />
+    <select
+      id="filterSupplier"
+      onchange="renderProducts()"
+      class="px-3 py-2.5 rounded-lg border border-slate-200 text-[11px] focus:outline-none shadow-sm bg-white min-w-[150px]"
+    >
+      <option value="">Tất cả Thương hiệu</option>
+    </select>
+  </div>
+  <div class="flex items-center gap-2">
+    <button
+      onclick="openImportModal()"
+      class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-[11px] font-bold rounded-lg shadow-sm transition flex items-center gap-1.5"
+    >
+      📥 Nhập Excel
+    </button>
+    <button
+      onclick="downloadTemplate()"
+      class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold rounded-lg shadow-sm transition flex items-center gap-1.5"
+    >
+      📤 Xuất Excel
+    </button>
+    <button
+      onclick="openProductModal()"
+      class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold rounded-lg shadow-sm transition flex items-center gap-1.5"
+    >
+      ➕ Thêm Linh Kiện Mới
+    </button>
+  </div>
+</div>
+
+<!-- Bảng Dữ Liệu Style TechVN -->
+<div
+  class="bg-white rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden h-full"
+>
+  <!-- Băng rôn xanh đậm phía trên bảng -->
+  <div
+    class="bg-[#1e293b] px-4 py-2.5 flex justify-between items-center text-white shrink-0 rounded-t-xl"
+  >
+    <div class="text-[11px] flex items-center gap-4">
+      <span
+        ><span id="txtTotalProducts" class="font-black text-amber-400">0</span>
+        mã linh kiện & sản phẩm</span
+      >
+      <span class="text-slate-400">|</span>
+      <span class="flex items-center gap-1"
+        ><span class="text-amber-400">🪄 Mẹo:</span> Nhấp đúp chuột
+        (Double-click) vào ô để sửa nhanh</span
+      >
+    </div>
+    <div class="flex gap-4 text-[10px] font-bold">
+      <span class="text-emerald-400 flex items-center gap-1">● Mới 100%</span>
+      <span class="text-blue-400 flex items-center gap-1">● Like New 99%</span>
+      <span class="text-amber-400 flex items-center gap-1"
+        >● Hàng Cũ (2nd)</span
+      >
+    </div>
+  </div>
+  <!-- Nội dung bảng -->
+  <div class="table-container flex-1 bg-white">
+    <table class="w-full text-left erp-table border-collapse">
+      <thead>
+        <tr>
+          <th class="w-10 text-center">#</th>
+          <th class="w-20">Mã SKU</th>
+          <th>Tên Linh Kiện / Sản Phẩm</th>
+          <th class="w-24">S/N (Serial)</th>
+          <th class="w-20">Loại</th>
+          <th class="w-24">NPP / Hãng</th>
+          <th class="w-20 text-center">Tình Trạng</th>
+          <th class="w-16 text-center">Tồn</th>
+          <th class="w-24 text-right">Giá Vốn</th>
+          <th class="w-24 text-right">Giá Thợ</th>
+          <th class="w-24 text-right">Giá Lẻ</th>
+          <th class="w-20 text-center">Bảo hành</th>
+          <th class="w-32">Ghi Chú</th>
+          <th class="w-10 text-center">Xóa</th>
+        </tr>
+      </thead>
+      <tbody id="productTableBody" class="divide-y divide-slate-100"></tbody>
+    </table>
+  </div>
+</div>

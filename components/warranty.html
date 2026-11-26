@@ -1,0 +1,537 @@
+<style>
+  .warranty-container {
+    font-family: "Segoe UI", sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .w-hero {
+    background: #16192b;
+    border-radius: 12px;
+    padding: 24px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  .w-hero-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .w-hero-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .w-hero-badge {
+    align-self: flex-start;
+    background: rgba(92, 66, 227, 0.2);
+    color: #a5b4fc;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .w-hero-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+  }
+  .w-hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    width: 100%;
+  }
+  .w-main-search {
+    flex: 1;
+    display: flex;
+    background: #23273f;
+    border: 1px solid #363b5e;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .w-main-search i.fa-barcode {
+    padding: 14px 16px;
+    color: #94a3b8;
+    background: #1e2235;
+    border-right: 1px solid #363b5e;
+  }
+  .w-main-search input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 0 16px;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+  }
+  .w-btn-search {
+    background: #5c42e3;
+    color: white;
+    border: none;
+    padding: 0 24px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .w-btn-create {
+    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .w-content-box {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  }
+  .w-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .w-filter-tabs {
+    display: flex;
+    gap: 8px;
+    background: #f1f5f9;
+    padding: 6px;
+    border-radius: 10px;
+  }
+  .w-tab {
+    background: transparent;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+  }
+  .w-tab.active {
+    background: #ffffff;
+    color: #5c42e3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  .w-quick-search {
+    display: flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0 16px;
+    width: 300px;
+  }
+  .w-quick-search input {
+    border: none;
+    background: transparent;
+    padding: 10px 12px;
+    width: 100%;
+    outline: none;
+    font-size: 13px;
+  }
+  .w-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .w-table th {
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 16px 12px;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .w-table td {
+    padding: 16px 12px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: top;
+  }
+  .w-code {
+    color: #dc2626;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .w-text-main {
+    color: #0f172a;
+    font-weight: 600;
+    font-size: 14px;
+    display: block;
+  }
+  .w-text-sub {
+    color: #64748b;
+    font-size: 13px;
+    display: block;
+  }
+  .w-text-sn {
+    color: #5c42e3;
+    font-size: 13px;
+    font-weight: 500;
+    background: #f3f0ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 4px;
+  }
+  .w-error-msg {
+    color: #be123c;
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .w-status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+  }
+  .ws-new {
+    background: #fef3c7;
+    color: #b45309;
+  }
+  .ws-processing {
+    background: #e0e7ff;
+    color: #4338ca;
+  }
+  .ws-vendor {
+    background: #fce7f3;
+    color: #be185d;
+  }
+  .ws-done {
+    background: #dcfce7;
+    color: #15803d;
+  }
+  .w-btn-edit {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .wr-modal-backdrop {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(15, 23, 42, 0.8) !important;
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999 !important;
+  }
+  .wr-modal-window {
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    width: 800px !important;
+    max-width: 95vw !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3) !important;
+    overflow: visible !important;
+  }
+  .wr-modal-top {
+    background: #e11d48 !important;
+    color: white !important;
+    padding: 16px 24px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+  .wr-modal-top h3 {
+    margin: 0 !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  .wr-btn-x {
+    background: transparent !important;
+    border: none !important;
+    color: white !important;
+    font-size: 24px !important;
+    cursor: pointer !important;
+  }
+  .wr-modal-mid {
+    padding: 24px 30px !important;
+  }
+  .wr-row {
+    display: flex !important;
+    gap: 24px !important;
+    margin-bottom: 20px !important;
+  }
+  .wr-col {
+    flex: 1 !important;
+  }
+  .wr-col label {
+    display: block !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+    margin-bottom: 8px !important;
+  }
+  .wr-col input,
+  .wr-col select {
+    width: 100% !important;
+    padding: 10px 14px !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+    outline: none !important;
+  }
+  .wr-col input:focus,
+  .wr-col select:focus {
+    border-color: #e11d48 !important;
+  }
+  .wr-modal-bot {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 12px !important;
+    padding-top: 10px !important;
+  }
+  .wr-btn-close {
+    background: #f8fafc !important;
+    color: #334155 !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 10px 24px !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+  }
+  .wr-btn-save {
+    background: #e11d48 !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 24px !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+  }
+
+  .wr-autocomplete-wrapper {
+    position: relative !important;
+  }
+  .wr-suggest-box {
+    position: absolute !important;
+    top: calc(100% + 4px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    max-height: 200px !important;
+    overflow-y: auto !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+    z-index: 999 !important;
+    display: none;
+  }
+  .wr-suggest-item {
+    padding: 10px 14px !important;
+    cursor: pointer !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    font-size: 13px !important;
+    color: #1e293b !important;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .wr-suggest-item:hover {
+    background: #f8fafc !important;
+    color: #e11d48 !important;
+  }
+  .wr-suggest-item:last-child {
+    border-bottom: none !important;
+  }
+</style>
+
+<div class="warranty-container">
+  <div class="w-hero">
+    <div class="w-hero-header">
+      <div class="w-hero-title-group">
+        <span class="w-hero-badge">Tra cứu bảo hành điện tử</span>
+        <h2 class="w-hero-title">
+          Kiểm tra hạn bảo hành theo Serial (S/N), SĐT hoặc Mã HĐ
+        </h2>
+      </div>
+    </div>
+    <div class="w-hero-actions">
+      <div class="w-main-search">
+        <i class="fa-solid fa-barcode"></i>
+        <input
+          type="text"
+          id="warranty-hero-search"
+          placeholder="Nhập Serial, SĐT hoặc Mã HĐ..."
+        />
+        <button type="button" class="w-btn-search" id="btn-hero-search">
+          Tra cứu
+        </button>
+      </div>
+      <button type="button" class="w-btn-create" id="btn-add-warranty">
+        <i class="fa-solid fa-wrench"></i> Tạo Phiếu Tiếp Nhận Mới
+      </button>
+    </div>
+  </div>
+
+  <div class="w-content-box">
+    <div class="w-toolbar">
+      <div class="w-filter-tabs">
+        <button type="button" class="w-tab active" data-status="all">
+          Tất cả phiếu
+        </button>
+        <button type="button" class="w-tab" data-status="Mới tiếp nhận">
+          Mới tiếp nhận
+        </button>
+        <button type="button" class="w-tab" data-status="Đang gửi hãng">
+          Đang gửi hãng
+        </button>
+        <button type="button" class="w-tab" data-status="Đang sửa chữa">
+          Đang sửa chữa
+        </button>
+        <button type="button" class="w-tab" data-status="Đã xong">
+          Đã trả khách
+        </button>
+      </div>
+      <div class="w-quick-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="warranty-search" placeholder="Lọc nhanh..." />
+      </div>
+    </div>
+
+    <div style="overflow-x: auto">
+      <table class="w-table">
+        <thead>
+          <tr>
+            <th style="width: 10%">MÃ PHIẾU</th>
+            <th style="width: 18%">KHÁCH HÀNG</th>
+            <th style="width: 22%">SẢN PHẨM & S/N</th>
+            <th style="width: 25%">MÔ TẢ LỖI</th>
+            <th style="width: 12%">NGÀY NHẬN/HẸN</th>
+            <th style="width: 8%; text-align: center">TRẠNG THÁI</th>
+            <th style="width: 5%; text-align: center">SỬA</th>
+          </tr>
+        </thead>
+        <tbody id="warranty-table-body">
+          <tr>
+            <td colspan="7" style="text-align: center">Đang tải dữ liệu...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="wr-main-modal" class="wr-modal-backdrop">
+  <div class="wr-modal-window">
+    <div class="wr-modal-top">
+      <h3 id="wr-title">
+        <i class="fa-solid fa-shield-halved"></i> Phiếu Tiếp Nhận Bảo Hành
+      </h3>
+      <button type="button" id="wr-btn-x" class="wr-btn-x">&times;</button>
+    </div>
+
+    <div class="wr-modal-mid">
+      <form id="wr-form">
+        <input type="hidden" id="wr-id" />
+
+        <div class="wr-row">
+          <div class="wr-col">
+            <label>Khách hàng (Nhập tên để tìm kiếm) *</label>
+            <div class="wr-autocomplete-wrapper">
+              <input
+                type="text"
+                id="wr-cus-name"
+                autocomplete="off"
+                placeholder="Nguyễn Văn A..."
+                required
+              />
+              <div id="wr-cus-suggest" class="wr-suggest-box"></div>
+            </div>
+          </div>
+          <div class="wr-col">
+            <label>Số điện thoại *</label>
+            <input
+              type="text"
+              id="wr-cus-phone"
+              placeholder="0909xxxxxx"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="wr-row">
+          <div class="wr-col">
+            <label>Sản phẩm *</label
+            ><input type="text" id="wr-product" required />
+          </div>
+          <div class="wr-col">
+            <label>Số Serial (S/N) *</label
+            ><input type="text" id="wr-serial" required />
+          </div>
+        </div>
+
+        <div class="wr-row">
+          <div class="wr-col">
+            <label>Ngày nhận bảo hành</label
+            ><input type="date" id="wr-receive-date" />
+          </div>
+          <div class="wr-col">
+            <label>Ngày hẹn trả (Dự kiến)</label
+            ><input type="date" id="wr-return-date" />
+          </div>
+        </div>
+
+        <div class="wr-col" style="margin-bottom: 20px">
+          <label>Tình trạng lỗi *</label
+          ><input type="text" id="wr-issue" required />
+        </div>
+
+        <div class="wr-row">
+          <div class="wr-col">
+            <label>Ghi chú / Phương án xử lý</label
+            ><input type="text" id="wr-note" />
+          </div>
+          <div class="wr-col">
+            <label>Trạng thái *</label>
+            <select id="wr-status" required>
+              <option value="Mới tiếp nhận">Mới tiếp nhận</option>
+              <option value="Đang xử lý">Đang xử lý</option>
+              <option value="Đang gửi hãng">Đang gửi hãng</option>
+              <option value="Đang sửa chữa">Đang sửa chữa</option>
+              <option value="Đã xong">Đã xong (Chờ trả)</option>
+              <option value="Đã trả khách">Đã trả khách</option>
+            </select>
+          </div>
+        </div>
+
+        <hr style="border-top: 1px solid #e2e8f0; margin: 20px 0" />
+
+        <div class="wr-modal-bot">
+          <button type="button" class="wr-btn-close" id="wr-btn-cancel">
+            Đóng
+          </button>
+          <button type="submit" class="wr-btn-save">Lưu Phiếu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
