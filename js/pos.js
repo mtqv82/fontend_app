@@ -15,7 +15,11 @@ export let currentPriceType = "retail";
 
 export async function initPosPage() {
   initPosTabs();
+  
+  await loadPosProducts(); 
+  
   initPosFiltersAndToggles(allPosProducts, renderPosProducts);
+  
   initCartEvents();
   initPosHistory();
 
@@ -29,7 +33,6 @@ export async function initPosPage() {
       renderCart();
     },
   );
-  await loadPosProducts();
 }
 
 async function loadPosProducts() {
