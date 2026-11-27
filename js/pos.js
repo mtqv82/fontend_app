@@ -89,3 +89,7 @@ export function renderPosProducts(data) {
 }
 
 window.addEventListener("refreshPosProducts", loadPosProducts);
+
+export function setCurrentPriceType(type) {
+  currentPriceType = type;
+}

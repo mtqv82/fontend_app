@@ -1,4 +1,4 @@
-import { currentPriceType } from "./../pos.js";
+import { currentPriceType, setCurrentPriceType } from "./../pos.js";
 
 export function initPosTabs() {
   const tabSell = document.getElementById("tab-pos-sell");
@@ -36,7 +36,7 @@ export function initPosFiltersAndToggles(allPosProducts, renderPosProducts) {
   const categorySelect = document.getElementById("pos-category");
 
   const togglePrice = (type, activeBtn, inactiveBtn) => {
-    currentPriceType = type;
+    setCurrentPriceType(type);
     activeBtn.classList.add("btn-purple", "active");
     activeBtn.classList.remove("btn-light");
     inactiveBtn.classList.add("btn-light");

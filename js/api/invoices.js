@@ -21,3 +21,20 @@ export async function fetchInvoiceDetail(id) {
     return [];
   }
 }
+export async function returnInvoiceItemsApi(invoiceId, itemsToReturn) {
+  try {
+    const res = await fetch(`${API_URL}/invoices/return`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ invoiceId, itemsToReturn }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Lỗi từ server");
+    return data;
+  } catch (error) {
+    console.error("Lỗi khi trả hàng:", error);
+    return { success: false, error: error.message };
+  }
+}

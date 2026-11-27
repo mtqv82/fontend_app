@@ -2,7 +2,7 @@ import { updateProductFieldApi } from "../api.js";
 import { showCustomAlert } from "../alert.js";
 import { allProducts } from "../product.js";
 import { openDeleteModal } from "./product-delete.js";
-
+import { initPosPage } from "../pos.js"
 export function renderTableData(productsToRender) {
   const tbody = document.getElementById("inventory-tbody");
   const totalSpan = document.getElementById("total-items");
@@ -107,6 +107,7 @@ function attachDoubleEditEvents() {
             product[fieldName] = newValue;
           }
           showCustomAlert("Cập nhật thành công!", "success");
+          if (typeof initPosPage === "function") initPosPage();
         } else {
           showCustomAlert("Lỗi lưu dữ liệu!", "error");
         }
