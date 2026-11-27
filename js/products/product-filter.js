@@ -39,6 +39,8 @@ function setupAutocomplete(inputId, listId, dataArray) {
 
   const renderList = (filterText) => {
     list.innerHTML = "";
+    
+    // BƯỚC 1: Lọc dữ liệu theo chữ gõ vào (giữ nguyên của bạn)
     const filtered = dataArray.filter((item) =>
       item.name.toLowerCase().includes(filterText.toLowerCase()),
     );
@@ -48,7 +50,22 @@ function setupAutocomplete(inputId, listId, dataArray) {
       return;
     }
 
-    filtered.forEach((item) => {
+    // ==========================================
+    // FIX LỖI NHÂN BẢN: XÓA CÁC THƯƠNG HIỆU TRÙNG NHAU TRONG MẢNG
+    // ==========================================
+    // BƯỚC 2: Dùng Map để nhóm lại, chỉ lấy những tên thương hiệu duy nhất (Unique)
+    const uniqueBrands = [];
+    const map = new Map();
+    for (const item of filtered) {
+        if(!map.has(item.name)){
+            map.set(item.name, true);    // Đánh dấu là đã thấy tên này
+            uniqueBrands.push(item);     // Đẩy vào mảng mới
+        }
+    }
+    // ==========================================
+
+    // BƯỚC 3: In ra màn hình bằng mảng đã lọc sạch (uniqueBrands thay vì filtered)
+    uniqueBrands.forEach((item) => {
       const li = document.createElement("li");
       li.textContent = item.name;
 
