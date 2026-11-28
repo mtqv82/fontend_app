@@ -2,6 +2,7 @@ import { fetchCustomerHistory, returnInvoiceItemsApi } from "./../api.js";
 import { showCustomAlert } from "./../alert.js";
 import { initPosPage } from "../pos.js";
 import { loadAndRenderTable } from "../product.js";
+import { loadAndRenderCustomers } from "../customer.js";
 
 function getHistoryModalContainer() {
     let modal = document.getElementById("modal-cus-history-v2");
@@ -290,6 +291,7 @@ function attachInlineReturnEvents() {
                             if(viewBtn) viewBtn.click();
                             initPosPage();
                             loadAndRenderTable()
+                            loadAndRenderCustomers()
                         }
                     } else {
                         showCustomAlert("Lỗi: " + data.error, "error");
