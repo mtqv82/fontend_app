@@ -1,9 +1,8 @@
 import { fetchCustomerHistory, returnInvoiceItemsApi } from "./../api.js";
 import { showCustomAlert } from "./../alert.js";
+import { initPosPage } from "../pos.js";
+import { loadAndRenderTable } from "../product.js";
 
-// ===============================================
-// MODAL: LỊCH SỬ MUA HÀNG (ĐÃ MỞ RỘNG 1050px)
-// ===============================================
 function getHistoryModalContainer() {
     let modal = document.getElementById("modal-cus-history-v2");
     
@@ -42,9 +41,41 @@ function getHistoryModalContainer() {
 
 let currentPhoneSearching = null;
 
-// ===============================================
-// KHỞI TẠO LỊCH SỬ MUA HÀNG
-// ===============================================
+function showConfirmModal(message) {
+    return new Promise((resolve) => {
+        const overlay = document.createElement("div");
+        overlay.style.cssText = "position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; z-index: 2147483647; animation: fadeIn 0.2s ease-out;";
+        
+        const modal = document.createElement("div");
+        modal.style.cssText = "background: #fff; width: 400px; max-width: 90vw; border-radius: 12px; padding: 24px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); text-align: center; transform: translateY(-20px); animation: slideDown 0.2s forwards;";
+        
+        modal.innerHTML = `
+            <style>
+                @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+                @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+            </style>
+            <div style="font-size: 45px; color: #e74c3c; margin-bottom: 15px;"><i class="fa-solid fa-circle-exclamation"></i></div>
+            <h3 style="margin: 0 0 10px 0; color: #0f172a; font-size: 18px; font-weight: bold;">Xác nhận đổi trả</h3>
+            <p style="margin: 0 0 24px 0; color: #475569; font-size: 14px; line-height: 1.5;">${message}</p>
+            <div style="display: flex; justify-content: center; gap: 12px;">
+                <button id="btn-custom-confirm-cancel" style="padding: 9px 20px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; cursor: pointer; font-weight: 500; color: #475569; transition: 0.2s;">Hủy bỏ</button>
+                <button id="btn-custom-confirm-ok" style="padding: 9px 20px; border: none; background: #e74c3c; color: white; border-radius: 6px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(231,76,60,0.3); transition: 0.2s;">Đồng ý trả hàng</button>
+            </div>
+        `;
+        
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        const close = (result) => {
+            document.body.removeChild(overlay);
+            resolve(result);
+        };
+
+        document.getElementById("btn-custom-confirm-cancel").onclick = () => close(false);
+        document.getElementById("btn-custom-confirm-ok").onclick = () => close(true);
+    });
+}
+
 export function initCustomerHistoryEventInList() {
     const viewButtons = document.querySelectorAll(".btn-view-cus-history");
     
@@ -82,15 +113,36 @@ export function initCustomerHistoryEventInList() {
                     const dateObj = new Date(inv.created_at);
                     const dateStr = dateObj.toLocaleDateString("vi-VN") + "<br>" + dateObj.toLocaleTimeString("vi-VN", {hour: '2-digit', minute:'2-digit'});
                     
-                    let statusHtml = `
-                        <div style="color: ${inv.debt_amount > 0 ? '#ef4444' : '#16a34a'}; font-weight: bold; margin-bottom: 5px;">
-                            ${inv.debt_amount > 0 ? "Nợ: " + Number(inv.debt_amount).toLocaleString("vi-VN") + " ₫" : "Đã tất toán"}
-                        </div>
-                    `;
+                    const isFullyReturned = Number(inv.final_total) === 0;
+
+                    let statusHtml = '';
+                    if (isFullyReturned) {
+                        statusHtml = `<div style="color: #64748b; font-weight: bold; margin-bottom: 5px;">Đã trả hàng</div>`;
+                    } else {
+                        statusHtml = `
+                            <div style="color: ${inv.debt_amount > 0 ? '#ef4444' : '#16a34a'}; font-weight: bold; margin-bottom: 5px;">
+                                ${inv.debt_amount > 0 ? "Nợ: " + Number(inv.debt_amount).toLocaleString("vi-VN") + " ₫" : "Đã tất toán"}
+                            </div>
+                        `;
+                    }
                     
-                    if (inv.note) statusHtml += `<div style="font-size: 12px; color: #888; font-style: italic;">${inv.note}</div>`;
+                    // if (inv.note) statusHtml += `<div style="font-size: 12px; color: #888; font-style: italic;">${inv.note}</div>`;
                     
-                    // Xử lý list item trả hàng Inline
+                    let actionButtonHtml = '';
+                    if (isFullyReturned) {
+                        actionButtonHtml = `
+                            <button disabled style="margin-top: 10px; padding: 6px 12px; font-size: 13px; font-weight: bold; background: #e2e8f0; border: none; color: #94a3b8; border-radius: 6px; cursor: not-allowed;">
+                                <i class="fa-solid fa-ban"></i> Đã trả hết
+                            </button>
+                        `;
+                    } else {
+                        actionButtonHtml = `
+                            <button class="btn-toggle-return" data-id="${inv.id}" style="margin-top: 10px; padding: 6px 12px; font-size: 13px; font-weight: bold; background: #e74c3c; border: none; color: white; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 4px rgba(231,76,60,0.3); transition: 0.2s;">
+                                <i class="fa-solid fa-arrow-down"></i> Đổi / Trả
+                            </button>
+                        `;
+                    }
+
                     let items = [];
                     try { items = typeof inv.raw_items === 'string' ? JSON.parse(inv.raw_items) : (inv.raw_items || []); } catch(e) {}
 
@@ -124,17 +176,18 @@ export function initCustomerHistoryEventInList() {
                     return `
                         <tr style="background: #fff; transition: background 0.2s;">
                             <td style="padding: 15px 10px; border-bottom: 1px solid #f1f5f9; vertical-align: top;">${dateStr}</td>
-                            <td style="padding: 15px 10px; border-bottom: 1px solid #f1f5f9; color: #475569; font-size: 14px; white-space: pre-line; line-height: 1.5; vertical-align: top;">${inv.items_list || 'Không có chi tiết'}</td>
-                            <td style="padding: 15px 10px; text-align: right; color: #2563eb; font-weight: bold; border-bottom: 1px solid #f1f5f9; vertical-align: top;">${Number(inv.final_total).toLocaleString("vi-VN")} ₫</td>
+                            <td style="padding: 15px 10px; border-bottom: 1px solid #f1f5f9; color: ${isFullyReturned ? '#94a3b8' : '#475569'}; text-decoration: ${isFullyReturned ? 'line-through' : 'none'}; font-size: 14px; white-space: pre-line; line-height: 1.5; vertical-align: top;">
+                                ${inv.items_list || 'Không có chi tiết'}
+                            </td>
+                            <td style="padding: 15px 10px; text-align: right; color: ${isFullyReturned ? '#94a3b8' : '#2563eb'}; font-weight: bold; border-bottom: 1px solid #f1f5f9; vertical-align: top;">
+                                ${Number(inv.final_total).toLocaleString("vi-VN")} ₫
+                            </td>
                             <td style="padding: 15px 10px; text-align: center; border-bottom: 1px solid #f1f5f9; vertical-align: top;">
                                 ${statusHtml}
-                                <button class="btn-toggle-return" data-id="${inv.id}" style="margin-top: 10px; padding: 6px 12px; font-size: 13px; font-weight: bold; background: #e74c3c; border: none; color: white; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 4px rgba(231,76,60,0.3); transition: 0.2s;">
-                                    <i class="fa-solid fa-arrow-down"></i> Đổi / Trả
-                                </button>
+                                ${actionButtonHtml}
                             </td>
                         </tr>
 
-                        <!-- KHUNG TRẢ HÀNG ẨN NGAY BÊN DƯỚI HÓA ĐƠN -->
                         <tr id="return-panel-${inv.id}" style="display: none; background: #f8fafc; border-bottom: 2px solid #cbd5e1;">
                             <td colspan="4" style="padding: 15px 20px;">
                                 <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px dashed #94a3b8; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
@@ -152,7 +205,6 @@ export function initCustomerHistoryEventInList() {
                     `;
                 }).join('');
 
-                // Gắn sự kiện cho các nút sau khi Render HTML
                 attachInlineReturnEvents();
 
             } catch (error) {
@@ -163,11 +215,7 @@ export function initCustomerHistoryEventInList() {
     });
 }
 
-// ===============================================
-// XỬ LÝ SỰ KIỆN NÚT TRONG KHUNG TRẢ HÀNG INLINE
-// ===============================================
 function attachInlineReturnEvents() {
-    // 1. Nút Mở/Đóng Form Trả
     document.querySelectorAll(".btn-toggle-return").forEach(btn => {
         btn.addEventListener("click", function() {
             const invId = this.getAttribute("data-id");
@@ -185,7 +233,6 @@ function attachInlineReturnEvents() {
         });
     });
 
-    // 2. Nút Hủy bên trong form
     document.querySelectorAll(".btn-cancel-inline").forEach(btn => {
         btn.addEventListener("click", function() {
             const invId = this.getAttribute("data-id");
@@ -198,7 +245,6 @@ function attachInlineReturnEvents() {
         });
     });
 
-    // 3. Nút Xác Nhận Trả Hàng
     document.querySelectorAll(".btn-confirm-inline").forEach(btn => {
         btn.addEventListener("click", async function() {
             const invId = this.getAttribute("data-id");
@@ -228,7 +274,9 @@ function attachInlineReturnEvents() {
                 return;
             }
 
-            if (confirm(`Xác nhận trả lại ${itemsToReturn.length} mã sản phẩm này? Kho hàng và tổng tiền sẽ tự động cập nhật.`)) {
+            const isConfirmed = await showConfirmModal(`Xác nhận trả lại <b>${itemsToReturn.length}</b> mã sản phẩm này?<br>Kho hàng và tổng tiền sẽ tự động cập nhật.`);
+
+            if (isConfirmed) {
                 const originalText = this.textContent;
                 this.textContent = "Đang xử lý...";
                 this.disabled = true;
@@ -237,10 +285,11 @@ function attachInlineReturnEvents() {
                     const data = await returnInvoiceItemsApi(invId, itemsToReturn);
                     if (data.success) {
                         showCustomAlert(data.message, "success");
-                        // Tự động Fake Click vào nút Xem Lịch Sử để refetch lại bảng
                         if(currentPhoneSearching) {
                             const viewBtn = document.querySelector(`.btn-view-cus-history[data-phone="${currentPhoneSearching}"]`);
                             if(viewBtn) viewBtn.click();
+                            initPosPage();
+                            loadAndRenderTable()
                         }
                     } else {
                         showCustomAlert("Lỗi: " + data.error, "error");

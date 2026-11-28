@@ -1,5 +1,6 @@
 import { checkoutOrder, getSettings } from "./../api.js";
 import { showCustomAlert } from "./../alert.js";
+import { loadAndRenderTable } from "../product.js";
 
 export async function openInvoiceModal(cart, totals, customer, clearCart) {
   // 1. Fetch HTML giao diện hóa đơn
@@ -164,6 +165,7 @@ export async function openInvoiceModal(cart, totals, customer, clearCart) {
           window.dispatchEvent(new Event("refreshCustomers"));
           closeModal();
           clearCart();
+          loadAndRenderTable()
           window.dispatchEvent(new Event("refreshPosProducts"));
         }
       } catch (error) {

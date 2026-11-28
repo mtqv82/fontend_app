@@ -107,7 +107,7 @@ function attachDoubleEditEvents() {
             product[fieldName] = newValue;
           }
           showCustomAlert("Cập nhật thành công!", "success");
-          if (typeof initPosPage === "function") initPosPage();
+            initPosPage();
         } else {
           showCustomAlert("Lỗi lưu dữ liệu!", "error");
         }
